@@ -64,3 +64,17 @@ export function UpdateUserById(req, res) {
         res.status(200).json(user)
     }).catch(DatabaseErrorCatch(res))
 }
+
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+export function DeleteUserById(req, res) {
+    if (user.id != req.params.id) {
+        res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED))
+        return
+    }
+    req.user.remove().then(() => {
+        res.sendStatus(200)
+    }).catch(DatabaseErrorCatch(res))
+}
