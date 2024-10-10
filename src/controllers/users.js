@@ -1,10 +1,10 @@
 import { UserModel } from "../models/user.js";
 import { hashSync } from "bcrypt";
 import express from "express"
-import { BuildErrorJson } from "../factories/error.js";
+import { BuildErrorJson, DatabaseErrorCatch } from "../factories/error.js"
 import { ErrorTypes } from "../enums/errortypes.js";
 import mongoose from "mongoose";
-import { DatabaseErrorCatch, HasPerm } from "../utils.js";
+import { HasPerm } from "../utils.js";
 import { UserRoles } from "../enums/userroles.js";
 
 const sanitize = {

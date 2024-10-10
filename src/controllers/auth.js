@@ -1,7 +1,6 @@
 import express from "express"
-import { BuildErrorJson } from "../factories/error.js"
+import { BuildErrorJson, DatabaseErrorCatch } from "../factories/error.js"
 import { ErrorTypes } from "../enums/errortypes.js"
-import { DatabaseErrorCatch } from "../utils.js"
 import { UserModel } from "../models/user.js"
 import { hashSync } from "bcrypt"
 import jsonwebtoken from "jsonwebtoken"
