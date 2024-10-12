@@ -21,6 +21,7 @@ export function CreateFile(req, res) {
     })
     file.save().then((result) => {
         result.buffer = undefined
+        result.__v = undefined
         res.status(200).json(result)
     }).catch(BuildErrorJson(ErrorTypes.DATABASE));
 }

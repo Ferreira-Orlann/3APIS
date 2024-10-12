@@ -9,6 +9,7 @@ export const UploadRouter = express.Router()
 import multer from "multer"
 import { HasPerm } from "../utils.js"
 import { UserRoles } from "../enums/userroles.js"
+import { FileFormatValidation } from "../middlewares/fileformatvalidation.js"
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -19,4 +20,4 @@ const upload = multer({
 
 UploadRouter.get("/:id", IsIdParamAValidObjectId, GetFile)
 UploadRouter.use(JwtAuth)
-UploadRouter.post("/", HasRole(UserRoles.ADMIN), upload.single("file"), CreateFile)
+UploadRouter.post("/", HasRole(UserRoles.ADMIN), upload.single("file"), FileFormatValidation(["jpeg", "bmp", "png", "webp", "tga"]), CreateFile)
