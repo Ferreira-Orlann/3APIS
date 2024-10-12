@@ -27,7 +27,7 @@ export function CreateFile(req, res) {
 
 /**
  * @param {express.Request} req 
- * @param {express.Response} res 
+ * @param {express.Response} res
  */
 export function GetFile(req, res) {
     FileModel.findById(req.params.id, sanitize).then((file) => {

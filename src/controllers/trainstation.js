@@ -3,7 +3,7 @@ import { hashSync } from "bcrypt";
 import express from "express"
 import { BuildErrorJson, DatabaseErrorCatch } from "../factories/error.js"
 import { ErrorTypes } from "../enums/errortypes.js";
-import mongoose from "mongoose";
+import mongoose, { Query } from "mongoose";
 import { HasPerm } from "../utils.js";
 import { TrainstationModel } from "../models/trainstation.js";
 
@@ -42,11 +42,13 @@ export function GetTrainstationById(req, res) {
  * @param {express.Response} res 
  */
 export function GetTrainstations(req, res) {
-    const perPage = 10
-    const page = Math.max(0, req.query.page)
+    const pageSize = Math.min(req.query.pageSize, process.env.PAGING_PAGE_SIZE_MAX)
+    const page = Math.max(1, req.query.page) - 1
+    console.log("limit", pageSize)
+    console.log("skip", pageSize * page)
     TrainstationModel.find({}, sanitize, {
-        limit: perPage,
-        skip: perPage * page
+        limit: pageSize,
+        skip: pageSize * page
     }).then((results) => {
         res.status(200).json(results)
     }).catch(DatabaseErrorCatch(res))
