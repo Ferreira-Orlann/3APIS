@@ -1,3 +1,5 @@
+import { ErrorTypes } from "../enums/errortypes.js"
+
 export function BuildErrorJson(errorType, message) {
     if (message === undefined) {
         return {error: errorType}

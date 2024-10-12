@@ -18,7 +18,7 @@ const TrainstationSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: mongoose.ObjectId,
+        type: mongoose.Types.ObjectId,
         required: true
     }
 })
