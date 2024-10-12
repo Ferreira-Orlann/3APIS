@@ -61,7 +61,7 @@ export function UpdateUserById(req, res) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "User doesn't exist"))
             return
         }
-        res.status(200).json(user)
+        res.status(204).json(user)
     }).catch(DatabaseErrorCatch(res))
 }
 
@@ -75,6 +75,6 @@ export function DeleteUserById(req, res) {
         return
     }
     req.user.remove().then(() => {
-        res.sendStatus(200)
+        res.sendStatus(204)
     }).catch(DatabaseErrorCatch(res))
 }

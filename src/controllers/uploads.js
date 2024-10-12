@@ -3,6 +3,7 @@ import { BuildErrorJson } from "../factories/error.js";
 import { FileModel } from "../models/uploads.js";
 import express from "express"
 import { DatabaseErrorCatch } from "../factories/error.js";
+import { TrainstationModel } from "../models/trainstation.js";
 
 const sanitize = {
     __v: false
@@ -38,5 +39,24 @@ export function GetFile(req, res) {
             'Content-Length': file.buffer.length
         });
         res.status(200).send(file.buffer)
+    }).catch(DatabaseErrorCatch(res))
+}
+
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res
+ */
+export function DeleteFile(req, res) {
+    TrainstationModel.find({image: req.params.id}, {}).then((result) => {
+        if (result.length != 0) {
+            res.status(400).json(BuildErrorJson(ErrorTypes.USED_ELSEWHERE))
+            return
+        }
+        FileModel.deleteOne({id: req.params.id}).then((deleted) => {
+            if (deleted.deletedCount == 0) {
+                res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "File doesn't exist"))
+            }
+            res.sendStatus(204)
+        }).catch(DatabaseErrorCatch(res))
     }).catch(DatabaseErrorCatch(res))
 }

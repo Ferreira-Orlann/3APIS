@@ -7,5 +7,6 @@ export const ErrorTypes = {
     MISSING_AUTH_HEADER: "Missing Authorization Header",
     JWT_ERROR: "Jwt Error",
     UNAUTHORIZED: "Unauthorized",
-    FILE_TYPE_NOT_ALLOWED: "File type not allowed"
+    FILE_TYPE_NOT_ALLOWED: "File type not allowed",
+    USED_ELSEWHERE: "Used Elsewhere"
 }

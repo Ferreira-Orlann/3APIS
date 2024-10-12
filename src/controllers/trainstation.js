@@ -73,7 +73,7 @@ function ExecuteUpdateTrainstationById(req, res) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "Station doesn't exist"))
             return
         }
-        res.status(200).json(station)
+        res.status(204).json(station)
     }).catch(DatabaseErrorCatch(res))
 }
 
@@ -100,6 +100,6 @@ export function UpdateTrainstationById(req, res) {
  */
 export function DeleteTrainstationById(req, res) {
     TrainstationModel.findByIdAndDelete(req.params.id).then(() => {
-        res.sendStatus(200)
+        res.sendStatus(204)
     }).catch(DatabaseErrorCatch(res))
 }
