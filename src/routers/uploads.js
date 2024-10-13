@@ -4,12 +4,10 @@ import { IsIdParamAValidObjectId } from "../middlewares/valididparam.js"
 import { CreateFile, GetFile, DeleteFile } from "../controllers/uploads.js"
 import { HasRole } from "../middlewares/hasrole.js"
 import multer from "multer"
-import { HasPerm } from "../utils.js"
 import { UserRoles } from "../enums/userroles.js"
 import { FileFormatValidation } from "../middlewares/fileformatvalidation.js"
 
 export const UploadRouter = express.Router()
-
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -21,5 +19,5 @@ const upload = multer({
 UploadRouter.param("id", IsIdParamAValidObjectId)
 UploadRouter.get("/:id", GetFile)
 UploadRouter.use(JwtAuth)
-UploadRouter.post("/", HasRole(UserRoles.ADMIN), upload.single("file"), FileFormatValidation(["jpeg", "bmp", "png", "webp", "tga"]), CreateFile)
-UploadRouter.delete("/:id", DeleteFile)
+UploadRouter.post("/", HasRole(UserRoles.ADMIN), upload.single("file"), FileFormatValidation(["jpeg", "png", "webp"]), CreateFile)
+UploadRouter.delete("/:id", DeleteFile) 

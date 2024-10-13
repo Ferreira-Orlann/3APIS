@@ -8,5 +8,6 @@ export const ErrorTypes = {
     JWT_ERROR: "Jwt Error",
     UNAUTHORIZED: "Unauthorized",
     FILE_TYPE_NOT_ALLOWED: "File type not allowed",
-    USED_ELSEWHERE: "Used Elsewhere"
+    USED_ELSEWHERE: "Used Elsewhere",
+    IMAGE_PROCESSING_ERROR: "Image Processing Error"
 }

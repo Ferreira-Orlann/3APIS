@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { UserRoles } from "../enums/userroles.js"
-import { buffer } from "stream/consumers";
 
 const FileSchema = mongoose.Schema({
     mimetype: {
