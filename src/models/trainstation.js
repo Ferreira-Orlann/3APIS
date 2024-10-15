@@ -19,7 +19,8 @@ const TrainstationSchema = mongoose.Schema({
     },
     image: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "File"
     }
 })
 

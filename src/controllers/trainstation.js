@@ -1,12 +1,9 @@
-import { UserModel } from "../models/user.js";
-import { hashSync } from "bcrypt";
 import express from "express"
 import { BuildErrorJson, DatabaseErrorCatch } from "../factories/error.js"
 import { ErrorTypes } from "../enums/errortypes.js";
-import mongoose, { Query } from "mongoose";
 import { DocumentExist, HasPerm } from "../utils.js";
 import { TrainstationModel } from "../models/trainstation.js";
-import { FileModel } from "../models/uploads.js";
+import { FileModel } from "../models/file.js";
 
 const sanitize = {
     __v: false

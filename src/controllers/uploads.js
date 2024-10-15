@@ -1,6 +1,6 @@
 import { ErrorTypes } from "../enums/errortypes.js";
 import { BuildErrorJson } from "../factories/error.js";
-import { FileModel } from "../models/uploads.js";
+import { FileModel } from "../models/file.js";
 import express from "express"
 import { DatabaseErrorCatch } from "../factories/error.js";
 import { TrainstationModel } from "../models/trainstation.js";
