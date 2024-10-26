@@ -22,6 +22,7 @@
     "supertest": "^7.0.0"
   },
   "dependencies": {
+    "@jest/globals": "^29.7.0",
     "@tensorflow/tfjs-node": "^4.21.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",

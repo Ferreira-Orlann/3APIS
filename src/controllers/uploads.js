@@ -65,7 +65,6 @@ export function DeleteFile(req, res) {
             return
         }
         FileModel.deleteOne({id: req.params.id}).then((deleted) => {
-            console.log(deleted)
             if (!deleted.acknowledged) {
                 res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "File doesn't exist"))
                 return

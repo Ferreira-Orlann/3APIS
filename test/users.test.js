@@ -1,10 +1,11 @@
 import 'dotenv/config'
-import { closeDatabase, connect } from './utils/mongoose'
+import { closeDatabase, connect } from './utils/mongoose.js'
 import { magika } from "../src/magika.js"
+import { InsertMockUser } from './utils/mockuser.js';
+import { userid, jwtToken} from "./utils/mockuser.js"
 import supertest from "supertest";
 import { app } from "../src/app.js";
-import jsonwebtoken from "jsonwebtoken"
-import { UserModel } from '../src/models/user.js';
+import { UserRoles } from '../src/enums/userroles.js';
 
 describe("Authentication & User", () => {
     beforeAll(() => {
@@ -24,7 +25,7 @@ describe("Authentication & User", () => {
             .end((err, res) => {
                 expect(res.body.email).toBe("example@test.com")
                 expect(res.body.pseudo).toBe("Example")
-                expect(res.body.role).toBe("client")
+                expect(res.body.role).toBe(UserRoles.CLIENT)
                 if (err) return done(err);
                 return done();
             });
@@ -45,21 +46,12 @@ describe("Authentication & User", () => {
     })
 
     describe("Loged Test", () => {
-        const userid = "670aabcab6d45cfe6d008564"
-        const jwtToken = jsonwebtoken.sign(userid, process.env.JWT_KEY)
-
         beforeAll((done) => {
-            let user = new UserModel({
-                "_id": userid,
-                "email": "example2@test.com",
-                "hashedPassword": "password",
-                "pseudo": "Example2"
-            })
-            user.save().then((user) => {
+            InsertMockUser(UserRoles.ADMIN).then(() => {
                 done()
             })
         })
-
+        
         it("Update User", (done) => {
             supertest(app)
                 .put(`/api/users/${userid}`)
@@ -73,7 +65,7 @@ describe("Authentication & User", () => {
                         "_id": userid,
                         "email": "example2@test.fr",
                         "pseudo": "Example2",
-                        "role": "client"
+                        "role": UserRoles.ADMIN
                     })
                     if (err) return done(err);
                     return done();
@@ -89,7 +81,7 @@ describe("Authentication & User", () => {
                         "_id": userid,
                         "email": "example2@test.fr",
                         "pseudo": "Example2",
-                        "role": "client"
+                        "role": UserRoles.ADMIN
                     })
                     if (err) return done(err);
                     return done();
