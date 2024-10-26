@@ -2,6 +2,8 @@ import { DatabaseErrorCatch } from "../factories/error.js";
 import { TrainModel } from "../models/train.js";
 import { TrainstationModel } from "../models/trainstation.js";
 import { DocumentsExists } from "../utils.js"
+import { BuildErrorJson } from "../factories/error.js";
+import { ErrorTypes } from "../enums/errortypes.js";
 import express from "express"
 
 const sanitize = {
@@ -13,7 +15,11 @@ const sanitize = {
  * @param {express.Response} res 
  */
 export function CreateTrain(req, res) {
-    DocumentsExists(TrainModel, [res.body.start_station, res.body.end_station]).then((result) => {
+    if (!req.body.hasOwnProperty("start_station") || !req.body.hasOwnProperty("end_station")) {
+        res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, `Need both 'start_station' and 'end_station'`))
+        return
+    }
+    DocumentsExists(TrainModel, [req.body.start_station || undefined, req.body.end_station || undefined]).then((result) => {
         {
             let keys = Object.keys(result)
             if (keys.length < 2) {

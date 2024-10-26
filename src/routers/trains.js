@@ -18,12 +18,12 @@ TrainRouter.post("/", ValidateBody(z.object({
     name: z.string().min(1, "Name's lenght need to be greater than 1"),
     start_station: MongooseObjectId,
     end_station: MongooseObjectId,
-    time_of_departure: z.date()
+    time_of_departure: z.string().transform((str) => new Date(str))
 }).strict()), CreateTrain)
 TrainRouter.put("/:id", ValidateBody(z.object({
     name: z.string().min(1, "Name's lenght need to be greater than 1").optional(),
     start_station: MongooseObjectId.optional(),
     end_station: MongooseObjectId.optional(),
-    time_of_departure: z.date().optional()
+    time_of_departure: z.string().transform((str) => new Date(str)).optional()
 }).strict()), UpdateTrainById)
 TrainRouter.delete("/:id", DeleteTrainById)
