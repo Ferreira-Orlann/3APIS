@@ -23,7 +23,7 @@ export function ValidateBody(zodScheme) {
             next()
             return
         }
-        res.json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, result.error))
+        res.status(422).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, result.error))
     }
 }
 
@@ -35,14 +35,12 @@ export function ValidateBody(zodScheme) {
 export function ValidateQueryString(zodScheme) {
     return (req, res, next) => {
         let result = zodScheme.safeParse(req.query)
-        console.log(req.query)
         if (result.success) {
-            console.log(result)
             req.query = result.data
             next()
             return
         }
-        res.json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, result.error))
+        res.status(422).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, result.error))
     }
 }
 
@@ -50,9 +48,15 @@ export function ValidateQueryString(zodScheme) {
  *  * @returns {function(express.Request, express.Response, function)}
  */
 
-export function ValidatePagingQuery() {
+export function ValidatePagingQuery(strict) {
+    if (strict) {
+        return ValidateQueryString(z.object({
+            page: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default("1"),
+            pageSize: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default(process.env.PAGING_DEFAULT_PAGE_SIZE.toString())
+        }).strict())
+    }
     return ValidateQueryString(z.object({
         page: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default("1"),
         pageSize: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default(process.env.PAGING_DEFAULT_PAGE_SIZE.toString())
-    }).strict())
+    }))
 }

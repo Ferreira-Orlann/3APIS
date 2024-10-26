@@ -17,7 +17,7 @@ const sanitize = {
 export function Login(req, res) {
     const password = req.body.password
     const email = req.body.email
-    UserModel   .findOne({email: email, hashedPassword: hashSync(password, process.env.HASH_SALT)}, sanitize).then((user) => {
+    UserModel.findOne({email: email, hashedPassword: hashSync(password, process.env.HASH_SALT)}, sanitize).then((user) => {
         if (user === null) {
             res.status(404).json(BuildErrorJson(ErrorTypes.WRONG_CREDENTIALS))
             return

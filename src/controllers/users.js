@@ -70,7 +70,7 @@ export function UpdateUserById(req, res) {
  * @param {express.Response} res 
  */
 export function DeleteUserById(req, res) {
-    if (user.id != req.params.id) {
+    if (req.user.id != req.params.id) {
         res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED))
         return
     }

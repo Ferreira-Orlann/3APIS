@@ -20,7 +20,7 @@ export function JwtAuth(req, res, next) {
             UserModel.findOne({_id:userId}).then((user) => {
                 req.user = user
                 if (user === null) {
-                    res.status(401).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "User doesn't exist"));
+                    res.status(400).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "The owner of the JWT Token desn't exist"));
                     return
                 }
                 next();

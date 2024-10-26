@@ -5,6 +5,8 @@ import { ValidateBody } from "../middlewares/datavalidation.js";
 import { z } from "zod"
 import { TrainstationRouter } from "./trainstation.js";
 import { UploadRouter } from "./uploads.js";
+import { TrainRouter} from "./trains.js"
+import { TicketRouter } from "./ticket.js"
 
 export const ApiRouter = express.Router()
 
@@ -16,3 +18,5 @@ ApiRouter.post("/login", ValidateBody(z.object({
 ApiRouter.use("/users", UserRouter)
 ApiRouter.use("/trainstations", TrainstationRouter)
 ApiRouter.use("/uploads", UploadRouter)
+ApiRouter.use("/trains", TrainRouter)
+ApiRouter.use("/tickets", TicketRouter)
