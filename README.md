@@ -5,7 +5,7 @@ Your task is to produce a full API using Node.js and Express.js (Fastify.js is a
 
 The API needs to be REST compliant (method, endpoint …).
 
-[Specifications](3apis_specifications.md)
+[Specifications](3apis_specifications.pdf)
 
 ## Installation
 
