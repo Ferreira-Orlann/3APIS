@@ -2,16 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Swagger Petstore - OpenAPI 3.0",
-    "description": "RailRoad ltd is a company which aim to produce the best experience for your local and national commute.",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "apiteam@swagger.io"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0.11"
+    "description": "RailRoad ltd is a company which aim to produce the best experience for your local and national commute."
   },
   "tags": [
     {
