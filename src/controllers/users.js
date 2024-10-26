@@ -61,7 +61,7 @@ export function UpdateUserById(req, res) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "User doesn't exist"))
             return
         }
-        res.status(204).json(user)
+        res.status(200).json(user)
     }).catch(DatabaseErrorCatch(res))
 }
 
