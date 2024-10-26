@@ -9,5 +9,6 @@ export const ErrorTypes = {
     UNAUTHORIZED: "Unauthorized",
     FILE_TYPE_NOT_ALLOWED: "File type not allowed",
     USED_ELSEWHERE: "Used Elsewhere",
-    IMAGE_PROCESSING_ERROR: "Image Processing Error"
+    IMAGE_PROCESSING_ERROR: "Image Processing Error",
+    DONT_EXIST: "This path doesn't exist"
 }
