@@ -20,4 +20,4 @@ UserRouter.put("/:id", ValidateBody(z.object({
     email: z.string().email("Invalid email address").optional(),
     password: z.string().min(8, "Password must be at least 8 characters long").optional(),
 }).strict()), UpdateUserById)
-UserRouter.delete(":/id", DeleteUserById)
+UserRouter.delete("/:id", DeleteUserById)

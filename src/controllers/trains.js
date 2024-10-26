@@ -63,7 +63,7 @@ export function GetTrains(req, res) {
  * @param {express.Response} res 
  */
 function ExecuteUpdateTrainById(req, res) {
-    TrainModel.findByIdAndUpdate(req.params.id, res.body, {projection: sanitize}).then((train) => {
+    TrainModel.findByIdAndUpdate(req.params.id, res.body, {projection: sanitize, new: true}).then((train) => {
         if (train == null) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "Train doesn't exist"))
             return

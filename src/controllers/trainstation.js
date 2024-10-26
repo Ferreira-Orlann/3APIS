@@ -61,7 +61,7 @@ export function GetTrainstations(req, res) {
  * @param {express.Response} res 
  */
 function ExecuteUpdateTrainstationById(req, res) {
-    TrainstationModel.findByIdAndUpdate(req.params.id, res.body, {projection: sanitize}).then((station) => {
+    TrainstationModel.findByIdAndUpdate(req.params.id, res.body, {projection: sanitize, new: true}).then((station) => {
         if (station == null) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "Station doesn't exist"))
             return

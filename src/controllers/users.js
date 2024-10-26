@@ -52,18 +52,15 @@ export function GetUserById(req, res) {
  * @param {express.Response} res 
  */
 export function UpdateUserById(req, res) {
-    UserModel.findByIdAndUpdate(req.params.id, req.body, {projection: sanitize}).then((user) => {
+    UserModel.findByIdAndUpdate(req.params.id, req.body, {projection: sanitize, new: true}).then((user) => {
         if (!HasPerm(req.user, UserRoles.ADMIN) && user.id != req.user.id) {
             res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED))
             return
-        }
+        }   
         if (user === null) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "User doesn't exist"))
             return
         }
-        console.log("User:", user)
-        console.log("User:", res.body)
-        console.log("User:", req.params.id)
         res.status(204).json(user)
     }).catch(DatabaseErrorCatch(res))
 }
@@ -77,7 +74,7 @@ export function DeleteUserById(req, res) {
         res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED))
         return
     }
-    req.user.remove().then(() => {
+    UserModel.findByIdAndDelete(req.params.id).then(() => {
         res.sendStatus(204)
     }).catch(DatabaseErrorCatch(res))
 }
