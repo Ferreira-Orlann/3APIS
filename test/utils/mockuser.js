@@ -14,7 +14,7 @@ export function InsertMockUser(role) {
     })
     return new Promise((resolve, reject) => {
         user.save().then((user) => {
-            resolve()
+            resolve(user)
         })
     })
 }
