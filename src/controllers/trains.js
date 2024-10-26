@@ -85,11 +85,11 @@ function ExecuteUpdateTrainById(req, res) {
 export function UpdateTrainById(req, res) {
     if (req.body.image) {
         DocumentsExists(TrainstationModel, [req.body.start_station, req.body.end_station]).then((results) => {
-            if (req.body.start_station && results[res.body.start_station] != true) {
+            if (req.body.start_station == undefined || results[res.body.start_station] != true) {
                 res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Start Station doesn't exist"))
                 return
             }
-            if (req.body.end_station && results[res.body.end_station] != true) {
+            if (req.body.end_station == undefined || results[res.body.end_station] != true) {
                 res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "End Station doesn't exist"))
                 return
             }
