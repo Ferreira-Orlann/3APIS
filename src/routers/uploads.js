@@ -19,5 +19,5 @@ const upload = multer({
 UploadRouter.param("id", IsIdParamAValidObjectId)
 UploadRouter.get("/:id", GetFile)
 UploadRouter.use(JwtAuth)
-UploadRouter.post("/", HasRole(UserRoles.ADMIN), upload.single("file"), FileFormatValidation(["jpeg", "png", "webp"]), CreateFile)
+UploadRouter.post("/", upload.single("file"), HasRole(UserRoles.ADMIN), FileFormatValidation(["jpeg", "png", "webp"]), CreateFile)
 UploadRouter.delete("/:id", HasRole(UserRoles.ADMIN), DeleteFile) 
