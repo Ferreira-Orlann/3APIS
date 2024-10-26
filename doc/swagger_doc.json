@@ -444,7 +444,13 @@
             "description": "Sort Field",
             "schema": {
               "type": "string",
-              "example": "name"
+              "example": "name",
+              "enum": [
+                "name",
+                "start_station",
+                "end_station",
+                "time_of_departure"
+              ]
             }
           }
         ],
@@ -714,7 +720,12 @@
             "description": "Sort Field",
             "schema": {
               "type": "string",
-              "example": "name"
+              "example": "name",
+              "enum": [
+                "name",
+                "open_hour",
+                "close_hour"
+              ]
             }
           }
         ],
