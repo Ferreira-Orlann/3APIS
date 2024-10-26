@@ -56,10 +56,11 @@ export function GetTrainById(req, res) {
 export function GetTrains(req, res) {
     const pageSize = Math.min(req.query.pageSize, process.env.PAGING_PAGE_SIZE_MAX)
     const page = Math.max(1, req.query.page) - 1
+    console.log(req.query)
     TrainModel.find({}, sanitize, {
         limit: pageSize,
         skip: pageSize * page
-    }).then((results) => {
+    }).sort(req.query.sort).then((results) => {
         res.status(200).json(results)
     }).catch(DatabaseErrorCatch(res))
 }

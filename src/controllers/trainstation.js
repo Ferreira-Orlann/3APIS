@@ -51,7 +51,7 @@ export function GetTrainstations(req, res) {
     TrainstationModel.find({}, sanitize, {
         limit: pageSize,
         skip: pageSize * page
-    }).then((results) => {
+    }).sort(req.query.sort).then((results) => {
         res.status(200).json(results)
     }).catch(DatabaseErrorCatch(res))
 }

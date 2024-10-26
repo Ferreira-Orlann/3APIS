@@ -9,7 +9,7 @@ import { UserRoles } from "../enums/userroles.js";
 
 export const TrainRouter = Router()
 
-TrainRouter.get("/", ValidatePagingQuery(true), GetTrains)
+TrainRouter.get("/", ValidatePagingQuery(false), GetTrains)
 TrainRouter.param("id", IsIdParamAValidObjectId)
 TrainRouter.get("/:id", GetTrainById)
 TrainRouter.use(JwtAuth)

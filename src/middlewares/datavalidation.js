@@ -36,7 +36,9 @@ export function ValidateQueryString(zodScheme) {
     return (req, res, next) => {
         let result = zodScheme.safeParse(req.query)
         if (result.success) {
-            req.query = result.data
+            for (const [key, value] of Object.entries(result.data)) {
+                req.query[key] = value
+            }
             next()
             return
         }

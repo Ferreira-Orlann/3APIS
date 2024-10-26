@@ -437,6 +437,15 @@
               "example": 20,
               "default": 50
             }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort Field",
+            "schema": {
+              "type": "string",
+              "example": "name"
+            }
           }
         ],
         "responses": {
@@ -697,6 +706,15 @@
               "type": "number",
               "example": 20,
               "default": 50
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort Field",
+            "schema": {
+              "type": "string",
+              "example": "name"
             }
           }
         ],
