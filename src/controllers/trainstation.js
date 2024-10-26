@@ -66,7 +66,7 @@ function ExecuteUpdateTrainstationById(req, res) {
             res.status(404).json(BuildErrorJson(ErrorTypes.UNKNOWN_ENTITY, "Station doesn't exist"))
             return
         }
-        res.status(204).json(station)
+        res.status(200).json(station)
     }).catch(DatabaseErrorCatch(res))
 }
 
