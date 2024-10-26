@@ -10,7 +10,7 @@ describe("Authentication & User", () => {
         magika.load()
     })
 
-    let jwtToken
+    let userid
 
     it("Register", (done) => {
         supertest(app)
@@ -30,22 +30,48 @@ describe("Authentication & User", () => {
             })
             .end((err, res) => {
                 if (err) return done(err);
+                userid = res.body.__id
                 return done();
             });
     })
 
-    // it("Login", () => {
-    //     supertest(app)
-    //         .post("/users/login")
-    //         .expect(400)
-    //         .expect((res) => {
-    //             res.body = "Email or Password undefined";
-    //         })
-    //         .end((err, res) => {
-    //             if (err) return done(err);
-    //             return done();
-    //         });
-    // })
+    let jwtToken
+
+    it("Login", (done) => {
+        supertest(app)
+            .post("/api/login")
+            .expect(200)
+            .send({
+                "email": "example@test.com",
+                "password": "password"
+            })
+            .end((err, res) => {
+                if (err || !res.body.token) return done(err);
+                jwtToken = res.body.token
+                return done();
+            });
+    })
+
+    it("Update User", (done) => {
+        supertest(app)
+            .put(`/api/users/${userid}`)
+            .expect(200)
+            .send({
+                "email": "example@test.fr",
+            })
+            .expect((res) => {
+                res.body = JSON.stringify({
+                    "_id": userid,
+                    "email": "example@test.fr",
+                    "password": "password",
+                    "pseudo": "Example"
+                })
+            })
+            .end((err, res) => {
+                if (err || !res.body.token) return done(err);
+                return done();
+            });
+    })
 
     afterAll(() => {
         closeDatabase()
