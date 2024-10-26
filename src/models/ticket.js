@@ -23,4 +23,4 @@ const TicketSchema = mongoose.Schema({
 })
 
 /** @type {mongoose.Model} */
-export const TicketModel = mongoose.model("Ticket", FileSchema)
+export const TicketModel = mongoose.model("Ticket", TicketSchema)
