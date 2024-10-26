@@ -7,7 +7,7 @@ export function HasRole(role) {
     return (req, res, next) => {
         const user = req.user
         if (!user || HasPerm(req.user, role)) {
-            res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED))
+            res.status(401).json(BuildErrorJson(ErrorTypes.UNAUTHORIZED, `You need to have the role '${role}'`))
             return
         }
         next()
