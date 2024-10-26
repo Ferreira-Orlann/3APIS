@@ -49,7 +49,6 @@ export function ValidateQueryString(zodScheme) {
 /**
  *  * @returns {function(express.Request, express.Response, function)}
  */
-
 export function ValidatePagingQuery(strict) {
     if (strict) {
         return ValidateQueryString(z.object({
@@ -61,4 +60,14 @@ export function ValidatePagingQuery(strict) {
         page: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default("1"),
         pageSize: z.string().regex(/^\d+(\.\d+)?$/, {message: "Must be a valid number"}).default(process.env.PAGING_DEFAULT_PAGE_SIZE.toString())
     }))
+}
+
+/**
+ * @param String[]
+ * @returns {function(express.Request, express.Response, function)}
+ */
+export function ValidateSortingQuery(authorized) {
+    return ValidateQueryString(z.object({
+        sort: z.enum(authorized)
+    })) 
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ValidateBody, MongooseObjectId, ValidatePagingQuery } from "../middlewares/datavalidation.js";
+import { ValidateBody, MongooseObjectId, ValidatePagingQuery, ValidateSortingQuery } from "../middlewares/datavalidation.js";
 import { z } from "zod"
 import { IsIdParamAValidObjectId } from "../middlewares/valididparam.js";
 import { JwtAuth } from "../middlewares/jwtauth.js";
@@ -9,7 +9,7 @@ import { UserRoles } from "../enums/userroles.js";
 
 export const TrainRouter = Router()
 
-TrainRouter.get("/", ValidatePagingQuery(false), GetTrains)
+TrainRouter.get("/", ValidatePagingQuery(false), ValidateSortingQuery(["name", "start_station", "end_station", "time_of_departure"]), GetTrains)
 TrainRouter.param("id", IsIdParamAValidObjectId)
 TrainRouter.get("/:id", GetTrainById)
 TrainRouter.use(JwtAuth)
