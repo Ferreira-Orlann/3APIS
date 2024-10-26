@@ -35,7 +35,7 @@ export function DocumentsExists(model, ids) {
     return new Promise((resolve, reject) => {
         model.find({_id: {"$in": ids}}).then((docs) => {
             let found = {}
-            for (let i = 0; i < docs.lenght; i++) {
+            for (let i = 0; i < Object.keys(docs).length; i++) {
                 found[docs[i]._id] = true
             }
             resolve(found)

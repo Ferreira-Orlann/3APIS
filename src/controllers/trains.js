@@ -19,11 +19,11 @@ export function CreateTrain(req, res) {
         res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, `Need both 'start_station' and 'end_station'`))
         return
     }
-    DocumentsExists(TrainModel, [req.body.start_station || undefined, req.body.end_station || undefined]).then((result) => {
+    DocumentsExists(TrainstationModel, [req.body.start_station || undefined, req.body.end_station || undefined]).then((result) => {
         {
             let keys = Object.keys(result)
             if (keys.length < 2) {
-                res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, `Stations ${keys} doesn't exist`))
+                res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, `Stations ${keys} doesn't exist or are the same`))
                 return
             }
         }
