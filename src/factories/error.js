@@ -2,7 +2,7 @@ import { trace } from "node:console"
 import { ErrorTypes } from "../enums/errortypes.js"
 
 export function BuildErrorJson(errorType, message) {
-    trace(errorType, message)
+    trace(errorType + ":", message)
     if (message === undefined) {
         return {error: errorType}
     }
