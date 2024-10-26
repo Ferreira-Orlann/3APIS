@@ -1,5 +1,11 @@
 # 3APIS
-3APIS 
+RailRoad ltd is a company which aim to produce the best experience for your local and national commute.
+
+Your task is to produce a full API using Node.js and Express.js (Fastify.js is also possible) to allow users to access information about train station or other relevant data. This should also allow people to "book" a ticket from one stop to another and provide an interface for specific user (let's call them employee) to verify the validity of the ticket
+
+The API needs to be REST compliant (method, endpoint …).
+
+[Specifications](3apis_specifications.md)
 
 ## Installation
 
@@ -29,3 +35,8 @@ PAGING_DEFAULT_PAGE_SIZE=5
 ```
 
 You only need to specify a valid MongoDB URI
+
+
+
+
+Github Repository: https://github.com/Ferreira-Orlann/3APIS
