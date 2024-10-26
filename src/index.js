@@ -1,13 +1,7 @@
 import "dotenv/config"
 import { app } from "./app.js";
 import mongoose from "mongoose";
-import swaggerUiExpress from "swagger-ui-express";
-import swaggerDoc from "../doc/swagger_doc.json" assert { type: 'json' };
 import { magika } from "./magika.js";
-
-if (process.env.doc === "true") {
-    app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDoc));
-}
 
 magika.load().then(() => {
     mongoose.connect(process.env.DB_URL).then((db) => {
