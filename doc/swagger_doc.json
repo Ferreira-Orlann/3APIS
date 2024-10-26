@@ -84,7 +84,6 @@
         ],
         "summary": "Register / Create a new User",
         "requestBody": {
-          "description": "Create a new pet in the store",
           "content": {
             "application/json": {
               "schema": {
@@ -126,7 +125,9 @@
             "$ref": "#/components/responses/ServerError"
           }
         }
-      },
+      }
+    },
+    "/api/users/{id}": {
       "put": {
         "tags": [
           "User"
@@ -136,12 +137,37 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "example@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "pseudo": {
+                    "type": "string",
+                    "example": "Example"
+                  }
+                }
               }
             }
           },
           "required": true
         },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the User",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -171,9 +197,7 @@
             "JWT": []
           }
         ]
-      }
-    },
-    "/api/users/{id}": {
+      },
       "get": {
         "tags": [
           "User"
@@ -394,6 +418,530 @@
           }
         ]
       }
+    },
+    "/api/trains": {
+      "get": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "Get Train's informations",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of a Page",
+            "schema": {
+              "type": "number",
+              "example": 2,
+              "default": 1
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page / Offset",
+            "schema": {
+              "type": "number",
+              "example": 20,
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Train"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "Create a new Train",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Ligne Tours-Paris"
+                  },
+                  "start_station": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "end_station": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "time_of_departure": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Train"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/trains/{id}": {
+      "get": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "Get Train's informations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Train",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Train"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "Update Train",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Train",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Ligne Tours-Paris"
+                  },
+                  "start_station": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "end_station": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "time_of_departure": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Train"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Train"
+        ],
+        "summary": "Delete Train",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Train",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Train"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/trainstations": {
+      "get": {
+        "tags": [
+          "Trainstation"
+        ],
+        "summary": "Get Trainstation's informations",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of a Page",
+            "schema": {
+              "type": "number",
+              "example": 2,
+              "default": 1
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page / Offset",
+            "schema": {
+              "type": "number",
+              "example": 20,
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Trainstation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trainstation"
+        ],
+        "summary": "Create a new Trainstation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Gare de Tours"
+                  },
+                  "open_hour": {
+                    "type": "number",
+                    "example": 8
+                  },
+                  "close_hour": {
+                    "type": "number",
+                    "example": 21
+                  },
+                  "image": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trainstation"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/trainstations/{id}": {
+      "get": {
+        "tags": [
+          "Trainstation"
+        ],
+        "summary": "Get Trainstation's informations",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Trainstation",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trainstation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trainstation"
+        ],
+        "summary": "Update Trainstation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Trainstation",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Gare de Tours"
+                  },
+                  "open_hour": {
+                    "type": "number",
+                    "example": 8
+                  },
+                  "close_hour": {
+                    "type": "number",
+                    "example": 21
+                  },
+                  "image": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trainstation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Trainstation"
+        ],
+        "summary": "Delete Trainstation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Trainstation",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Trainstation"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -458,6 +1006,28 @@
         "type": "string",
         "example": "22710f9e-c139-48e7-9d0e-0e485bca36e4",
         "description": "RFC 4122 version 4 UUID. The UUID is generated using a cryptographic pseudorandom number generator."
+      },
+      "Train": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "name": {
+            "type": "string",
+            "name": "Ligne Tours-Paris"
+          },
+          "start_station": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "end_station": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "time_of_departure": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       },
       "User": {
         "type": "object",
@@ -526,6 +1096,29 @@
           "buffer": {
             "type": "string",
             "format": "binary"
+          }
+        }
+      },
+      "Trainstation": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "name": {
+            "type": "string",
+            "example": "Gare de Tours"
+          },
+          "open_hour": {
+            "type": "number",
+            "example": 8
+          },
+          "close_hour": {
+            "type": "number",
+            "example": 21
+          },
+          "image": {
+            "$ref": "#/components/schemas/ObjectId"
           }
         }
       },

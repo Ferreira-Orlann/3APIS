@@ -16,7 +16,7 @@ const sanitize = {
 export function CreateTrainstation(req, res) {
     DocumentExist(FileModel, req.body.image).then((bool) => {
         if (!bool) {
-            res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Image doesn't exist"))
+            res.status(422).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Image doesn't exist"))
             return
         }
         const station = new TrainstationModel(req.body)
@@ -78,7 +78,7 @@ export function UpdateTrainstationById(req, res) {
     if (req.body.image) {
         DocumentExist(FileModel, req.body.image).then((bool) => {
             if (!bool) {
-                res.status(400).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Image doesn't exist"))
+                res.status(422).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Image doesn't exist"))
                 return
             }
             ExecuteUpdateTrainstationById(req, res)
