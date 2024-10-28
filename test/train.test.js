@@ -7,39 +7,46 @@ import supertest from 'supertest'
 import { app } from "../src/app.js"
 import { InsertMockFile } from "./utils/mockfile.js"
 import { InsertMockTrainstation } from "./utils/mocktrainstation.js"
+import { InsertMockTrain } from './utils/mocktrain.js'
 
-const trainstartionid = "670aabcab6d45cfe6d008564"
+const trainid = "670aabcab6d45cfe6d008564"
+const trainstationOneId = "671d487a849651d3679a9b27"
+const trainstationTwoid = "671d5284bfbcf097261ce7ce"
 const filepath = "./resources/test/SUPINFO-logo.png"
-let imageid
+let date = new Date(Date.now()).toISOString()
 
-describe("Trainstation", () => {
+describe("Train", () => {
     beforeAll((done) => {
         connect()
         magika.load()
         InsertMockUser(UserRoles.ADMIN).then(() => {
             InsertMockFile(undefined, filepath, "image/png", "SUPINFO-logo.png", Date.now()).then((image) => {
-                imageid = image._id.toString()
-                done()
+                let imageid = image._id.toString()
+                InsertMockTrainstation(trainstationOneId, "Trainstation One", 10, 15, imageid).then(() => {
+                    InsertMockTrainstation(trainstationTwoid, "Trainstation Two", 10, 15, imageid).then(() => {
+                        done()
+                    })
+                })
             })
         })
     })
     
-    it("Create a Trainstatin", (done) => {
+    it("Create a Train", (done) => {
         supertest(app)
-            .post(`/api/trainstations`)
+            .post(`/api/trains`)
             .set("Authorization", `Bearer ${jwtToken}`)
             .send({
-                "name": "Gare de Tours",
-                "open_hour": 8,
-                "close_hour": 21,
-                "image": imageid
+                "name": "Train Test",
+                "start_station": trainstationOneId,
+                "end_station": trainstationTwoid,
+                "time_of_departure": date
             })
             .expect(200)
             .end((err, res) => {
-                expect(res.body.name).toEqual("Gare de Tours")
-                expect(res.body.open_hour).toEqual(8)
-                expect(res.body.close_hour).toEqual(21)
-                expect(res.body.image).toEqual(imageid)
+                expect(res.body.name).toEqual("Train Test")
+                expect(res.body.start_station).toEqual(trainstationOneId)
+                expect(res.body.end_station).toEqual(trainstationTwoid)
+                expect(res.body.time_of_departure).toBe(date)
                 if (err) return done(err);
                 return done();
             });
@@ -47,31 +54,31 @@ describe("Trainstation", () => {
 
     describe("With Mock Trainstation", () => {
         beforeAll((done) => {
-            InsertMockTrainstation(trainstartionid, "Gare de Test", 10, 15, imageid).then((trainstation) => {
+            InsertMockTrain(trainid, "Train Test Two", trainstationOneId, trainstationTwoid, date).then((train) => {
                 done()
             })
         })
 
-        it("Get a Trainstation", (done) => {
+        it("Get a Train", (done) => {
             supertest(app)
-                .get(`/api/trainstations/${trainstartionid}`)
+                .get(`/api/trains/${trainid}`)
                 .expect(200)
                 .end((err, res) => {
                     expect(res.body).toEqual({
-                        "_id": trainstartionid,
-                        "name": "Gare de Test",
-                        "open_hour": 10,
-                        "close_hour": 15,
-                        "image": imageid
+                        "_id": trainid,
+                        "name": "Train Test Two",
+                        "start_station": trainstationOneId,
+                        "end_station": trainstationTwoid,
+                        "time_of_departure": date
                     })
                     if (err) return done(err);
                     return done();
                 });
         })
     
-        it("Delete a Trainstation", (done) => {
+        it("Delete a Train", (done) => {
             supertest(app)
-                .delete(`/api/trainstations/${trainstartionid}`)
+                .delete(`/api/trains/${trainid}`)
                 .set("Authorization", `Bearer ${jwtToken}`)
                 .expect(204)
                 .end((err, res) => {

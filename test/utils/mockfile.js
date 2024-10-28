@@ -1,4 +1,3 @@
-import jsonwebtoken from "jsonwebtoken"
 import { FileModel } from "../../src/models/file.js"
 import { readFile } from "node:fs/promises"
 

@@ -29,7 +29,7 @@ export function CreateFile(req, res) {
                 result.buffer = undefined
                 result.__v = undefined
                 res.status(200).json(result)
-            }).catch(BuildErrorJson(ErrorTypes.DATABASE));
+            }).catch(DatabaseErrorCatch(res));
         }).catch((err) => {
             res.status(500).json(BuildErrorJson(ErrorTypes.IMAGE_PROCESSING_ERROR, err))
         })

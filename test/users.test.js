@@ -52,7 +52,7 @@ describe("Authentication & User", () => {
             })
         })
         
-        it("Update User", (done) => {
+        it("Update a User", (done) => {
             supertest(app)
                 .put(`/api/users/${userid}`)
                 .set('Authorization', `Bearer ${jwtToken}`)
@@ -72,7 +72,7 @@ describe("Authentication & User", () => {
                 });
         })
 
-        it("Get User", (done) => {
+        it("Get a User", (done) => {
             supertest(app)
                 .get(`/api/users/${userid}`)
                 .set('Authorization', `Bearer ${jwtToken}`)
@@ -88,7 +88,7 @@ describe("Authentication & User", () => {
                 });
         })
 
-        it("Delete User", (done) => {
+        it("Delete a User", (done) => {
             supertest(app)
                 .delete(`/api/users/${userid}`)
                 .set('Authorization', `Bearer ${jwtToken}`)

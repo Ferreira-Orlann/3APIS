@@ -21,7 +21,7 @@ export function FileFormatValidation(allowed) {
             }
             res.status(400).json(BuildErrorJson(ErrorTypes.FILE_TYPE_NOT_ALLOWED, `File type '${prediction.label}' is not allowed`))
         }).catch((err) => {
-            console.log("Error:", err)
+            res.status(400).json(BuildErrorJson(ErrorTypes.MAGIKA_ERROR, `File not recognizable`))
         });
     }
 }

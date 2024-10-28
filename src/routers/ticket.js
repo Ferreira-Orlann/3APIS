@@ -9,6 +9,7 @@ export const TicketRouter = Router()
 
 const uuidSchema = z.string().uuid();
 
+TicketRouter.post("/", BookTicket)
 TicketRouter.param("uuid", (req, res, next, value) => {
     uuidSchema.parseAsync(value).then((result) => {
         next()
@@ -16,6 +17,5 @@ TicketRouter.param("uuid", (req, res, next, value) => {
         res.status(422).json(BuildErrorJson(ErrorTypes.DATA_VALIDATION, "Invalid UUID, need UUID v4"))
     })    
 })
-TicketRouter.get("/:uuid", ValidateTicket)
 TicketRouter.use(JwtAuth)
-TicketRouter.post("/:uuid", BookTicket)
+TicketRouter.get("/:uuid", ValidateTicket)

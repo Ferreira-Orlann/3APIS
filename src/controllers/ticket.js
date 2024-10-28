@@ -18,6 +18,7 @@ export function BookTicket(req, res) {
     DocumentExist(TrainModel, req.body.train).then((bool) => {
         if (bool) {
             const ticket = new TicketModel(req.body)
+            ticket.booktime = Date.now()
             ticket.save().then((saved) => {
                 saved.__v = undefined
                 saved._id = undefined

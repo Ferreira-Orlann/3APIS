@@ -963,6 +963,122 @@
           }
         ]
       }
+    },
+    "/api/tickets/{uuid}": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Validate Ticket",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "UUID",
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Trainstation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/tickets": {
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Book a  Ticket",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "train": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "user": {
+                    "$ref": "#/components/schemas/ObjectId"
+                  },
+                  "booktime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "uuid": {
+                    "$ref": "#/components/schemas/UUID"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/JWTError"
+          },
+          "404": {
+            "$ref": "#/components/responses/UnknownEntity"
+          },
+          "422": {
+            "$ref": "#/components/responses/DataValidationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1036,7 +1152,7 @@
           },
           "name": {
             "type": "string",
-            "name": "Ligne Tours-Paris"
+            "example": "Ligne Tours-Paris"
           },
           "start_station": {
             "$ref": "#/components/schemas/ObjectId"

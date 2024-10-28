@@ -10,7 +10,7 @@ import { FileModel } from '../src/models/file.js'
 import { readFile } from 'node:fs/promises'
 
 const filepath = "./resources/test/SUPINFO-logo.png"
-export const fileid = "670aabcab6d45cfe6d008564"
+const fileid = "670aabcab6d45cfe6d008564"
 const filebuffer = await readFile(filepath)
 
 describe("Upload", () => {
